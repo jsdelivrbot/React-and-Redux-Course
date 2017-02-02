@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
+import { createPost } from '../actions/index';
 
 class PostsNew extends Component {
   render() {
     const { fields: { title, categories, content }, handleSubmit } = this.props;
     return(
-        <form onSubmit={ handleSubmit }>
+        <form onSubmit={ handleSubmit(this.props.createPost) }>
           <h3>Create A New Post</h3>
 
           <div className='form-group'>
@@ -29,7 +30,9 @@ class PostsNew extends Component {
   }
 };
 
+// connect: first arg is mapStateToProps, second is mapDispatchToProps
+// reduxForm: first is form config, second is mapStateToProps, third is mapDispatchToProps
 export default reduxForm({
   form: 'PostsNewForm',
   fields: [ 'title', 'categories', 'content']
-})(PostsNew);
+}, null, { createPost })(PostsNew);
